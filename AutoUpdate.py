@@ -10,8 +10,7 @@ from telethon.tl.functions.channels import GetFullChannelRequest
 api_id = 925503
 api_hash = 'b47d1ad4b832b79123af664781df4755'
 ##
-# client = TelegramClient('UserData', api_id, api_hash)
-client = TelegramClient('pooyat', api_id, api_hash)
+client = TelegramClient('UserData', api_id, api_hash)
 
 
 bot_id= "@SponserHelperBot"

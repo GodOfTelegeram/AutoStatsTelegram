@@ -33,6 +33,9 @@ async def main():
                         min_id=0,
                         add_offset=0)
             print("all tags recived...")
+            if("You didn't create any proxy yet." in MTProxybot_last_msg[0].message):
+                print("you must create a tag from : @MTProxybot \n we kill our self ... :)")
+                exit(200)
             if(not('Here is the list of all proxies you created:' in MTProxybot_last_msg[0].message)):
                 print("we think another robot in process... we wait 10 second...")
                 await sleep(10)

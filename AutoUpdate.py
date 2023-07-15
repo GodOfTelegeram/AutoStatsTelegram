@@ -21,7 +21,7 @@ client.start()
 
 async def main():
     while True:
-        # try:
+        try:
             print("================================")
             print("try to get proxies tag...")
             await client.send_message('@MTProxybot', '/myproxies')
@@ -91,8 +91,8 @@ async def main():
             await sleep(60*60*2)
             print("loop started after two hour... ")
             print("================================")
-        # except:
-        #     print("ERROR HAPPEND")
+        except:
+            print("ERROR HAPPEND")
 
 with client:
     client.loop.run_until_complete(main())

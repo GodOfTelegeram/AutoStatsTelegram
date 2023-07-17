@@ -5,6 +5,32 @@ from time import sleep
 from asyncio import sleep
 from telethon.tl.functions.messages import GetBotCallbackAnswerRequest
 from telethon.tl.functions.channels import GetFullChannelRequest
+from datetime import datetime, timedelta
+
+TimeTable = [ #enter your timetable below first number is hour and second is minute
+    [9,32],
+    [10,32],
+    [11,32],
+    [12,32],
+    [13,20],
+    [14,32],
+    [15,32],
+    [16,32],
+    [17,32],
+    [18,32],
+    [19,32],
+    [20,32],
+    [21,32],
+    [22,32],
+    [23,32],
+    [0,32],
+]
+bot_id= "@SponserHelperBot"
+
+
+
+
+
 
 ## DO NOT CHANGE THIS DATA IT's retived from my.telegram.org
 api_id = 925503
@@ -12,16 +38,37 @@ api_hash = 'b47d1ad4b832b79123af664781df4755'
 ##
 client = TelegramClient('UserData', api_id, api_hash)
 
-
-bot_id= "@SponserHelperBot"
-
-
 client.start()
 
-
+current_day = -1 # flag to build time table daily
+Current_Time_Table = []
 async def main():
+    global  current_day
+    global  Current_Time_Table
     while True:
-        try:
+        # try:
+            current_time_in_utc = datetime.utcnow()
+            iran_time = current_time_in_utc + timedelta(hours=3,minutes=30)
+
+            if(iran_time.strftime("%d") != current_day):
+                print("RE PRODUCE TIME TABLE")
+                current_day = iran_time.strftime("%d")
+                for time in TimeTable:
+                    Current_Time_Table.append([time[0],time[1],1]) #hour , minute , flagCHecked
+            current_hour = int(iran_time.strftime("%H"))
+            current_minute = int(iran_time.strftime("%M"))
+            Flag_LET_GET_STATS = 0
+            for index,time in enumerate(Current_Time_Table, start=0):
+                if(current_hour == time[0]):
+                    if(time[2]): #flag is true it's mean must check
+                        if(current_minute >= time[1]):
+                            Flag_LET_GET_STATS =1
+                            break
+            if(not(Flag_LET_GET_STATS)):
+                print("WE ARE NOT IN TIME TABLE, iran time:",iran_time.strftime("%H:%M")," we wait 3minute and then try again")
+                await sleep(60 * 3)
+                continue
+
             print("================================")
             print("try to get proxies tag...")
             await client.send_message('@MTProxybot', '/myproxies')
@@ -83,19 +130,15 @@ async def main():
                         else:
                             print("-no stats exist",button.text)
 
+                        # set flagChecked to zero and it's mean we do not try anymore on this time
+                        Current_Time_Table[index][2] = 0
                         await client(GetBotCallbackAnswerRequest(
                             '@MTProxybot',
                             (MTProxybot_last_msg[0].id),
                             data=MTProxybot_last_msg[0].reply_markup.rows[0].buttons[1].data
                         ))
-
-            print("================================")
-            print("waiting two hour... ")
-            await sleep(60*60*2)
-            print("loop started after two hour... ")
-            print("================================")
-        except:
-            print("ERROR HAPPEND")
+        # except:
+        #     print("ERROR HAPPEND")
 
 with client:
     client.loop.run_until_complete(main())

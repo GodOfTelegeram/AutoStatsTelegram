@@ -52,6 +52,7 @@ async def main():
 
             if(iran_time.strftime("%d") != current_day):
                 print("RE PRODUCE TIME TABLE")
+                Current_Time_Table = []
                 current_day = iran_time.strftime("%d")
                 for time in TimeTable:
                     Current_Time_Table.append([time[0],time[1],1]) #hour , minute , flagCHecked

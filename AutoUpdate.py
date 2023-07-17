@@ -32,7 +32,7 @@ bot_id= "@SponserHelperBot"
 
 
 
-## DO NOT CHANGE THIS DATA IT's retived from my.telegram.org
+## DO NOT CHANGE THIS DATA IT's retrieved from my.telegram.org
 api_id = 925503
 api_hash = 'b47d1ad4b832b79123af664781df4755'
 ##

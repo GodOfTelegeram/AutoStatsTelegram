@@ -46,7 +46,7 @@ async def main():
     global  current_day
     global  Current_Time_Table
     while True:
-        # try:
+        try:
             current_time_in_utc = datetime.utcnow()
             iran_time = current_time_in_utc + timedelta(hours=3,minutes=30)
 
@@ -137,8 +137,8 @@ async def main():
                             (MTProxybot_last_msg[0].id),
                             data=MTProxybot_last_msg[0].reply_markup.rows[0].buttons[1].data
                         ))
-        # except:
-        #     print("ERROR HAPPEND")
+        except:
+            print("ERROR HAPPEND")
 
 with client:
     client.loop.run_until_complete(main())
